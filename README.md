@@ -25,18 +25,20 @@ erDiagram
         VARCHAR name "商品名"
         VARCHAR description "商品の説明"
         INTEGER category "カテゴリー (Enum)"
-        INTEGER status "商品の状態 (Enum)"
+        INTEGER condition "商品の状態 (Enum)"
         INTEGER delivery_fee "配送料の負担 (Enum)"
         INTEGER prefecture "発送元の地域 (Enum/JISコード)"
         INTEGER until_delivery "発送までの日数 (Enum)"
         BIGINT price "価格 (300~9999999)"
         VARCHAR img "商品画像"
+        BOOLEAN soldout "購入/未購入"
     }
 
     buys {
         BIGINT id PK "自動採番"
         BIGINT user_id FK "購入者ユーザーID (外部キー)"
         BIGINT product_id FK "購入商品ID (外部キー)"
+        BIGINT address_id FK "アドレスID（外部キー）"
     }
 
     addresses {
