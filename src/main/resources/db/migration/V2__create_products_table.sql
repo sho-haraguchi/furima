@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS products (
   name VARCHAR(255) NOT NULL,
   description TEXT,
   category INTEGER NOT NULL,
-  status INTEGER NOT NULL,
+  condition INTEGER NOT NULL,
   delivery_fee INTEGER NOT NULL,
   prefecture INTEGER NOT NULL,
   until_delivery INTEGER NOT NULL,
