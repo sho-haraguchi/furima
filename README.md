@@ -10,7 +10,7 @@ erDiagram
     users {
         BIGINT id PK "自動採番"
         VARCHAR nickname "ニックネーム"
-        VARCHAR email "メールアドレス (UNIQUE)"
+        VARCHAR email UK "メールアドレス (UNIQUE)"
         VARCHAR password "パスワード (半角英数字混合)"
         VARCHAR last_name "名字 (全角)"
         VARCHAR first_name "名前 (全角)"
