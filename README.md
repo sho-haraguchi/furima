@@ -2,51 +2,51 @@
 
 ```mermaid
 erDiagram
-    users ||--o{ products : "出品する"
-    users ||--o{ buys : "購入する"
-    products ||--o| buys : "購入される"
-    buys ||--|| addresses : "配送先となる"
+    users ||--o{ products : "1対多 (出品)"
+    users ||--o{ buys : "1対多 (購入)"
+    products ||--o| buys : "1対0または1 (購入情報)"
+    buys ||--|| addresses : "1対1 (配送先)"
 
     users {
-        bigint id PK
-        varchar nickname
-        varchar email UK
-        varchar password
-        varchar last_name
-        varchar first_name
-        varchar last_name_kana
-        varchar first_name_kana
-        date birthday
+        BIGINT id PK "自動採番"
+        VARCHAR nickname "ニックネーム"
+        VARCHAR email "メールアドレス (UNIQUE)"
+        VARCHAR password "パスワード (半角英数字混合)"
+        VARCHAR last_name "名字 (全角)"
+        VARCHAR first_name "名前 (全角)"
+        VARCHAR last_name_kana "名字カナ (全角カタカナ)"
+        VARCHAR first_name_kana "名前カナ (全角カタカナ)"
+        DATE birthday "生年月日"
     }
 
     products {
-        bigint id PK
-        bigint user_id FK
-        varchar name
-        varchar description
-        enum category
-        enum status
-        enum delivery_fee
-        enum prefecture
-        enum until_delivery
-        bigint price
-        varchar img
+        BIGINT id PK "自動採番"
+        BIGINT user_id FK "ユーザーID (外部キー)"
+        VARCHAR name "商品名"
+        VARCHAR description "商品の説明"
+        ENUM category "カテゴリー"
+        ENUM status "商品の状態"
+        ENUM delivery_fee "配送料の負担"
+        ENUM prefecture "発送元の地域"
+        ENUM until_delivery "発送までの日数"
+        BIGINT price "価格 (300~9999999)"
+        VARCHAR img "商品画像"
     }
 
     buys {
-        bigint id PK
-        bigint user_id FK
-        bigint product_id FK
+        BIGINT id PK "自動採番"
+        BIGINT user_id FK "購入者ユーザーID (外部キー)"
+        BIGINT product_id FK "購入商品ID (外部キー)"
     }
 
     addresses {
-        bigint id PK
-        bigint buy_id FK
-        varchar post_number
-        enum prefecture FK
-        varchar city
-        varchar block
-        varchar building
-        bigint phone
+        BIGINT id PK "自動採番"
+        BIGINT buy_id FK "購入情報ID (外部キー)"
+        VARCHAR post_number "郵便番号 (3桁-4桁)"
+        ENUM prefecture "都道府県"
+        VARCHAR city "市区町村"
+        VARCHAR block "番地"
+        VARCHAR building "建物名 (任意)"
+        VARCHAR phone "電話番号 (ハイフンなし10~11桁)"
     }
 ```
