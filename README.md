@@ -1,7 +1,10 @@
+### 📊 ER図（データベース設計）
+
+```mermaid
 erDiagram
     users ||--o{ products : "出品する"
     users ||--o{ buys : "購入する"
-    products ||--o. buys : "購入される"
+    products ||--o| buys : "購入される"
     buys ||--|| addresses : "配送先となる"
 
     users {
@@ -46,3 +49,4 @@ erDiagram
         varchar building
         varchar phone
     }
+```
