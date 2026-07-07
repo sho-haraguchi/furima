@@ -38,7 +38,6 @@ erDiagram
         BIGINT id PK "自動採番"
         BIGINT user_id FK "購入者ユーザーID (外部キー)"
         BIGINT product_id FK "購入商品ID (外部キー)"
-        BIGINT address_id FK "アドレスID（外部キー）"
     }
 
     addresses {
