@@ -24,11 +24,11 @@ erDiagram
         bigint user_id FK
         varchar name
         varchar description
-        integer category_id
-        integer status_id
-        integer shipping_fee_id
-        integer prefecture_id
-        integer shipping_days_id
+        enum category
+        enum status
+        enum delivery_fee
+        enum prefecture
+        enum until_delivery
         bigint price
         varchar img
     }
@@ -43,10 +43,10 @@ erDiagram
         bigint id PK
         bigint buy_id FK
         varchar post_number
-        integer prefecture_id
+        enum prefecture FK
         varchar city
         varchar block
         varchar building
-        varchar phone
+        bigint phone
     }
 ```
