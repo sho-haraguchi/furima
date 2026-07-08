@@ -12,7 +12,7 @@ public class ProductEntity {
   private int category;
   private int condition;
   private int deliveryFee;
-  private int utilDelivery;
+  private int untilDelivery;
   private Long price;
   private String img;
 
