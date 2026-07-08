@@ -7,11 +7,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductQueryResult {
 
-  private final Long id;
-  private final String img;
-  private final String name;
-  private final Long price;
-  private final int deliveryFee;
-  private final Long productId;
+  private Long id;
+  private String img;
+  private String name;
+  private Long price;
+  private int deliveryFee;
+  private Long productId;
 
 }
