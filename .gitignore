@@ -41,3 +41,4 @@ out/
 
 ## uploads ###
 uploads/**
+!uploads/.gitkeep
