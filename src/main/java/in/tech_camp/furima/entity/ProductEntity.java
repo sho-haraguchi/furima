@@ -3,15 +3,16 @@ import lombok.Data;
 
 @Data
 public class ProductEntity {
+  
   private Long id;
   private Long userId;
   private String name;
   private String description;
-  private Integer category;
-  private Integer condition;
-  private Integer deliveryFee;
-  private Integer prefecture;
-  private Integer untilDelivery;
+  private int category;
+  private int condition;
+  private int deliveryFee;
+  private int untilDelivery;
   private Long price;
   private String img;
+
 }
