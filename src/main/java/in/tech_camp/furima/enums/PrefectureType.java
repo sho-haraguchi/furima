@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Prefecture {
+public enum PrefectureType {
 
   HOKKAIDO(1, "北海道"),
   AOMORI(2, "青森県"),
@@ -60,7 +60,7 @@ public enum Prefecture {
   private final int code;
   private final String label;
 
-  public static Prefecture fromCode(int code) {
+  public static PrefectureType fromCode(int code) {
     // 逆引きでcodeから都道府県を見つける
     /**
      * 全県取得 -> 引数に渡されたJISコードと一致するかfilterをかけ、一致した最初の都道府県を取得
