@@ -96,7 +96,7 @@
         新規投稿商品
       </div>
       <ul class="item-lists">
-        <li class='list' th:if="${items == null}">
+        <li class='list' th:if="${items.isEmpty()}">
           <a href="#">
             <img class="item-img"
               src="https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg" />
@@ -107,8 +107,7 @@
               <div class='item-price'>
                 <span>99999999円<br>(税込み)</span>
                 <div class='star-btn'>
-                  <img class="star-icon"
-                    src="/assets/star-icon-7f3ed77654d6c9dfc47f9ce980dedbb1b4bb8f858e6c4ee37f69a4844479500b.png" />
+                  <img th:src="@{/images/star.png}" class="star-icon" alt="">
                   <span class='star-count'>0</span>
                 </div>
               </div>
@@ -136,7 +135,7 @@
               <div class="item-price">
                 <span>[[${item.price}]] 円<br>[[${item.deliveryFee}]]</span>
                 <div class="star-btn">
-                  <img src="/images/star.png" class="star-icon" alt="">
+                  <img th:src="@{/images/star.png}" class="star-icon" alt="">
                   <span class="star-count">0</span>
                 </div>
               </div>
