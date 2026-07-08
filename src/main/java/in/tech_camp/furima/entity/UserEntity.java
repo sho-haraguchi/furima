@@ -14,7 +14,7 @@ public class UserEntity {
   private String lastName;
   private String firstName;
   private String lastNameKana;
-  private String firstNameKane;
+  private String firstNameKana;
   private LocalDate birthday;
 
 }
