@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import in.tech_camp.furima.dto.ProductListDto;
+import in.tech_camp.furima.dto.repository.ProductQueryResult;
 
 @Mapper
 public interface ProductRepository {
@@ -17,6 +17,6 @@ public interface ProductRepository {
       ON p.id = b.product_id
       ORDER BY p.id DESC
       """)
-  List<ProductListDto> findAll();
+  List<ProductQueryResult> findAll();
 
 }

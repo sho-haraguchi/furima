@@ -10,6 +10,6 @@ public class ProductListDto {
   private String name;
   private Long price;
   private String deliveryFee;
-  private int productId;
+  private boolean soldout;
   
 }

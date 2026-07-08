@@ -123,7 +123,7 @@
               </div>
 
               <!-- 商品が売れていればsold outを表示しましょう -->
-              <div class="sold-out" th:if="${item.productId == 0}">
+              <div class="sold-out" th:if="${item.soldout == true}">
                 <span>Sold Out!!</span>
               </div>
 

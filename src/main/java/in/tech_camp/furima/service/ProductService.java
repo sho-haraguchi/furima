@@ -28,8 +28,8 @@ public class ProductService {
           dto.setImg(product.getImg());
           dto.setName(product.getName());
           dto.setPrice(product.getPrice());
-          dto.setProductId(product.getProductId());
-          dto.setDeliveryFee(DeliveryFeeType.fromCode(Integer.parseInt(product.getDeliveryFee())).getLabel());
+          dto.setSoldout(product.getProductId() != null);
+          dto.setDeliveryFee(DeliveryFeeType.fromCode(product.getDeliveryFee()).getLabel());
           return dto;
         }).collect(Collectors.toList());
 
