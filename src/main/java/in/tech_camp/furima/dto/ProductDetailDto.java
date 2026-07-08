@@ -9,11 +9,12 @@ public class ProductDetailDto {
   private String img;
   private Long price;
   private int deliveryFee;
+  private String description;
   private String nickname;
   private String category;
   private String status;
   private String prefectures;
   private String untilDelivery;
-  private int soldout;
+  private boolean soldout;
 
 }
