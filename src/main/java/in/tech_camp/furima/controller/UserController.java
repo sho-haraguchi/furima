@@ -33,7 +33,7 @@ public class UserController {
         return "users/sign_up";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/users/sign_up")
     public String userInsert(@Validated @ModelAttribute("registerForm") RegisterForm registerForm,
             BindingResult result, HttpServletRequest request) {
 
