@@ -22,12 +22,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users/sign_in")
+    @GetMapping("/login")
     public String login() {
         return "users/sign_in";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/users/sign_up")
     public String register(Model model) {
         model.addAttribute("registerForm", new RegisterForm());
         return "users/sign_up";
