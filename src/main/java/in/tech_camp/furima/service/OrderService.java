@@ -26,7 +26,7 @@ public class OrderService {
     }
 
     public boolean isSoldout(Long productId) {
-      return buyRepository.existsByProductId(productId);
+      return buyRepository.existsByProductId(productId) == null;
     }
 
     @Transactional
