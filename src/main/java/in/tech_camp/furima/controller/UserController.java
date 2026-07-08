@@ -27,44 +27,47 @@ public class UserController {
         return "users/sign_in";
     }
 
-    @GetMapping("/users/sign_up")
+    @GetMapping("/login")
     public String register(Model model) {
         model.addAttribute("registerForm", new RegisterForm());
         return "users/sign_up";
     }
 
-    @PostMapping("/users/sign_up")
+    @PostMapping("/login")
     public String userInsert(@Validated @ModelAttribute("registerForm") RegisterForm registerForm,
             BindingResult result, HttpServletRequest request) {
 
+        // パスワードの一致チェック
+        if (!registerForm.getPassword().equals(registerForm.getPasswordConfirmation())) {
+            result.rejectValue("passwordConfirmation", "error.passwordConfirmation", "パスワードとパスワード（確認）が一致しません");
+        }
+
+        // メールアドレスの重複チェック
+        if (userService.isEmailExist(registerForm.getEmail())) {
+            result.rejectValue("email", "error.email", "このメールアドレスは既に登録されています");
+        }
+
+        // 存在しない日付対策）
+        if (registerForm.getBirthYear() != null && registerForm.getBirthMonth() != null
+                && registerForm.getBirthDay() != null) {
+            try {
+                java.time.LocalDate.of(registerForm.getBirthYear(), registerForm.getBirthMonth(),
+                        registerForm.getBirthDay());
+            } catch (java.time.DateTimeException e) {
+                result.rejectValue("birthDay", "error.birthDay", "存在する正しい日付を選択してください");
+            }
+        }
+
+        // すべてのバリデーションエラーを一括判定
         if (result.hasErrors()) {
             errorSetPassForm(registerForm);
             return "users/sign_up";
         }
-        try {
-            java.time.LocalDate.of(registerForm.getBirthYear(), registerForm.getBirthMonth(),
-                    registerForm.getBirthDay());
-        } catch (java.time.DateTimeException e) {
-            // 存在しない日付の場合はエラーとして画面に戻す
-            result.rejectValue("birthDay", "error.birthDay", "存在する正しい日付を選択してください");
-            errorSetPassForm(registerForm);
-            return "users/sign_up";
-        }
 
-        if (!registerForm.getPassword().equals(registerForm.getPasswordConfirmation())) {
-            result.rejectValue("passwordConfirmation", "error.passwordConfirmation", "パスワードとパスワード（確認）が一致しません");
-            errorSetPassForm(registerForm);
-            return "users/sign_up";
-        }
-
-        if (userService.isEmailExist(registerForm.getEmail())) {
-            result.rejectValue("email", "error.email", "このメールアドレスは既に登録されています");
-            errorSetPassForm(registerForm);
-            return "users/sign_up";
-        }
-
+        // 登録処理
         userService.userInsert(registerForm);
 
+        // ログイン処理
         try {
             request.login(registerForm.getEmail(), registerForm.getPassword());
         } catch (ServletException e) {
