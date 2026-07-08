@@ -9,7 +9,7 @@ public class ProductListDto {
   private String img;
   private String name;
   private Long price;
-  private int deliveryFee;
-  private int soldout;
-
+  private String deliveryFee;
+  private int productId;
+  
 }
