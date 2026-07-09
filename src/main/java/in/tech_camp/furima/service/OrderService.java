@@ -20,15 +20,18 @@ public class OrderService {
     private final AddressRepository addressRepository;
     private final PayjpService payjpService;
 
+    // 無い商品にアクセスしようとしたとき
     public ProductEntity findById(Long productId) {
       return productRepository.findById(productId)
                               .orElseThrow(() -> new IllegalArgumentException("Invalid product ID:" + productId));
     }
 
+    // ログイン状態の場合でも、自身が出品していない売却済み商品の商品購入ページへ遷移しようとすると、トップページに遷移すること。
     public boolean isSoldout(Long productId) {
-      return buyRepository.existsByProductId(productId) == null;
+      return buyRepository.existsByProductId(productId) != null;
     }
 
+    // 商品購入処理
     @Transactional
     public void createOrder(Long productId, Long userId, OrderDto orderDto) {
       ProductEntity product = findById(productId);
@@ -40,18 +43,17 @@ public class OrderService {
       BuyEntity buy = new BuyEntity();
       buy.setUserId(userId);
       buy.setProductId(productId);
-      BuyEntity savedBuy = buyRepository.insert(buy);
+      buyRepository.insert(buy);
 
       // addressesテーブルへ保存
       AddressEntity address = new AddressEntity();
-      address.setBuyId(savedBuy.getId());
+      address.setBuyId(buy.getId());
       address.setPostNumber(orderDto.getPostNumber());
       address.setPrefecture(orderDto.getPrefecture());
       address.setCity(orderDto.getCity());
       address.setBlock(orderDto.getBlock());
       address.setBuilding(orderDto.getBuilding());
       address.setPhone(orderDto.getPhone());
-
       addressRepository.save(address);
     }
 }

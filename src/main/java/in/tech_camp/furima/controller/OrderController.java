@@ -12,14 +12,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import in.tech_camp.furima.dto.OrderDto;
 import in.tech_camp.furima.entity.ProductEntity;
+import in.tech_camp.furima.enums.PrefectureType;
+import in.tech_camp.furima.security.CustomUserDetails;
 import in.tech_camp.furima.service.OrderService;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -35,7 +35,7 @@ public class OrderController {
   // 購入画面の表示
   @GetMapping("/items/{productId}/orders")
   public String showOrderPage(@PathVariable Long productId, 
-                              @AuthenticationPrincipal CustomUserDetail userDetail,
+                              @AuthenticationPrincipal CustomUserDetails userDetail,
                               @ModelAttribute OrderDto orderDto, Model model) {
 
     // ログアウト状態の場合は、商品購入ページに遷移しようとすると、商品の販売状況に関わらずログインページに遷移すること。
@@ -47,7 +47,7 @@ public class OrderController {
     ProductEntity product = orderService.findById(productId);
 
     // // ログイン状態の場合でも、自身が出品した商品の商品購入ページに遷移しようとすると、商品の販売状況に関わらずトップページに遷移すること。
-    if (product.getUserid().equals(currentUserId)) {
+    if (product.getUserId().equals(currentUserId)) {
       return "redirect:/";
     }
 
@@ -57,6 +57,7 @@ public class OrderController {
     }
 
     model.addAttribute("product", product);
+    model.addAttribute("prefectures", PrefectureType.values());
     model.addAttribute("payjpPublicKey", payjpPublicKey);
     
     return "orders/index";
@@ -66,8 +67,8 @@ public class OrderController {
   // 購入処理
   @PostMapping("/items/{productId}/orders")
   public String buy(@PathVariable Long productId,
-                    @AuthenticationPrincipal CustomUserDetail userDetail,
-                    @Validated(OrderDto.ValidationOrder.class) @ModelAttribute OrderDto orderDto,
+                    @AuthenticationPrincipal CustomUserDetails userDetail,
+                    @Validated @ModelAttribute OrderDto orderDto,
                     BindingResult bindingResult,
                     Model model) {
 
@@ -75,6 +76,7 @@ public class OrderController {
     if (bindingResult.hasErrors()) {
       ProductEntity product = orderService.findById(productId);
       model.addAttribute("product", product);
+      model.addAttribute("prefectures", PrefectureType.values());
       model.addAttribute("payjpPublicKey", payjpPublicKey); // 再表示時も鍵が必要なので
 
       return "orders/index";
@@ -84,6 +86,7 @@ public class OrderController {
     Long currentUserId = userDetail.getUser().getId();
     orderService.createOrder(productId, currentUserId, orderDto);
 
+    // 購入が完了したら、トップページに遷移すること。
     return "redirect:/";
   }
 }
