@@ -1,6 +1,7 @@
 package in.tech_camp.furima.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import in.tech_camp.furima.entity.ProductEntity;
 import org.apache.ibatis.annotations.Insert;
@@ -28,5 +29,5 @@ public interface ProductRepository {
 
   // 1件取得
   @Select("SELECT * FROM products WHERE id = #{id}")
-  ProductEntity findById(Long id);
+  Optional<ProductEntity> findById(Long id);
 }
