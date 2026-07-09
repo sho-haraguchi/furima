@@ -8,12 +8,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
-import in.tech_camp.furima.enums.*;
+import in.tech_camp.furima.enums.Category;
+import in.tech_camp.furima.enums.Condition;
+import in.tech_camp.furima.enums.DeliveryFee;
+import in.tech_camp.furima.enums.PrefectureType;
+import in.tech_camp.furima.enums.UntilDelivery;
 import in.tech_camp.furima.form.ProductForm;
 import in.tech_camp.furima.security.CustomUserDetails;
 import in.tech_camp.furima.service.ProductService;
@@ -56,13 +60,6 @@ public class ProductController {
   @GetMapping("path")
   public String getMethodName(@RequestParam String param) {
     return new String();
-  }
-
-  // 商品一覧表示機能
-  @GetMapping({ "/", "", "items" })
-  public String showAllProduct(Model model) {
-    model.addAttribute("items", productService.allProduct());
-    return "items/index";
   }
 
   // 商品出品機能
