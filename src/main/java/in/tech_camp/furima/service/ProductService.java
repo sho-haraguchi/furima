@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import in.tech_camp.furima.dto.ProductListDto;
@@ -44,6 +45,7 @@ public class ProductService {
     }
 
     // 商品出品機能
+    @Transactional
     public void saveProduct(ProductForm form, Long userId) throws IOException {
         String imageName = null;
         MultipartFile imgFile = form.getImg();

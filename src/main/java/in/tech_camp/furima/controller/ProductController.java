@@ -2,6 +2,7 @@ package in.tech_camp.furima.controller;
 
 import java.io.IOException;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import in.tech_camp.furima.enums.*;
 import in.tech_camp.furima.form.ProductForm;
+import in.tech_camp.furima.security.CustomUserDetails;
 import in.tech_camp.furima.service.ProductService;
 
 @Controller
@@ -43,7 +45,8 @@ public class ProductController {
     @PostMapping("/items")
     public String createProduct(@ModelAttribute @Validated ProductForm productForm,
             BindingResult bindingResult,
-            Model model) {
+            Model model,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         if (productForm.getImg() == null || productForm.getImg().isEmpty()) {
             bindingResult.rejectValue("img", "error.productForm", "出品画像を選択してください");
@@ -54,7 +57,7 @@ public class ProductController {
             return "items/new";
         }
 
-        Long loginUserId = 1L;
+        Long loginUserId = userDetails.getUser().getId();
 
         try {
             productService.saveProduct(productForm, loginUserId);
