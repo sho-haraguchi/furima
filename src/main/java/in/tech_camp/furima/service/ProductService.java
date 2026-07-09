@@ -1,13 +1,22 @@
 package in.tech_camp.furima.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import in.tech_camp.furima.dto.ProductDetailDto;
 import in.tech_camp.furima.dto.ProductListDto;
+import in.tech_camp.furima.entity.ProductEntity;
 import in.tech_camp.furima.enums.DeliveryFeeType;
+import in.tech_camp.furima.form.ProductForm;
 import in.tech_camp.furima.repository.ProductRepository;
 
 @Service
@@ -19,9 +28,8 @@ public class ProductService {
     this.productRepository = productRepository;
   }
 
-  // 一覧表示
+  // 商品一覧表示機能
   public List<ProductListDto> allProduct() {
-
     List<ProductListDto> products = productRepository.findAll()
         .stream().map(product -> {
           ProductListDto dto = new ProductListDto();
@@ -35,10 +43,43 @@ public class ProductService {
         }).collect(Collectors.toList());
 
     return products;
-
   }
 
-  // 詳細表示
+  // 商品出品機能
+  @Transactional
+  public void saveProduct(ProductForm form, Long userId) throws IOException {
+    String imageName = null;
+    MultipartFile imgFile = form.getImg();
+
+    if (imgFile != null && !imgFile.isEmpty()) {
+      String uuid = UUID.randomUUID().toString();
+      imageName = uuid + "-" + imgFile.getOriginalFilename();
+
+      Path uploadDir = Paths.get("uploads").toAbsolutePath();
+
+      if (!Files.exists(uploadDir)) {
+        Files.createDirectories(uploadDir);
+      }
+
+      Path imagePath = uploadDir.resolve(imageName);
+      Files.copy(imgFile.getInputStream(), imagePath);
+    }
+
+    ProductEntity product = new ProductEntity();
+    product.setImg(imageName);
+    product.setUserId(userId);
+    product.setName(form.getName());
+    product.setDescription(form.getDescription());
+    product.setCategory(form.getCategory());
+    product.setCondition(form.getCondition());
+    product.setDeliveryFee(form.getDeliveryFee());
+    product.setPrefecture(form.getPrefecture());
+    product.setUntilDelivery(form.getUntilDelivery());
+    product.setPrice(form.getPrice());
+
+    productRepository.insert(product);
+  }
+
   public ProductDetailDto selectByProductId(Long id) {
 
     ProductDetailDto dto = productRepository.selectByProductId(id);
@@ -78,5 +119,4 @@ public class ProductService {
     return result;
 
   }
-
 }

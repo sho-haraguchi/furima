@@ -3,17 +3,20 @@ package in.tech_camp.furima.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import in.tech_camp.furima.dto.ProductDetailDto;
 import in.tech_camp.furima.dto.repository.ProductQueryResult;
+import in.tech_camp.furima.entity.ProductEntity;
 
 @Mapper
 public interface ProductRepository {
 
-  // 商品一覧表示
+  // 商品一覧表示機能
   @Select("""
       SELECT p.id,p.img,p.name,p.price,p.delivery_fee,b.product_id FROM products p
       LEFT JOIN buys b
@@ -41,12 +44,17 @@ public interface ProductRepository {
 
   // 更新
   @Update("""
-      UPDATE products 
+      UPDATE products
       SET img = #{img},name = #{name},description = #{description},
       category = #{category},status = #{status},delivery_fee = #{deliveryFee},
       prefectures = ${prefectures},until_delivery = #{untilDelivery},price = #{price}
       WHERE id = #{id}
       """)
   int updateByProductId(Long id);
+
+  // 商品出品機能
+  @Insert("INSERT INTO products (user_id, name, description, category, condition, delivery_fee, prefecture, until_delivery, price, img) VALUES (#{userId}, #{name}, #{description}, #{category}, #{condition}, #{deliveryFee}, #{prefecture}, #{untilDelivery}, #{price}, #{img})")
+  @Options(useGeneratedKeys = true, keyProperty = "id")
+  void insert(ProductEntity product);
 
 }
