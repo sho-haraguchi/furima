@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Furima</title>
-
   <link rel="stylesheet" th:href="@{/css/application.css}">
   <link rel="stylesheet" th:href="@{/css/shared/header.css}">
   <link rel="stylesheet" th:href="@{/css/shared/footer.css}">
@@ -97,8 +96,6 @@
         新規投稿商品
       </div>
       <ul class="item-lists">
- <div class="sold-out">
-
         <li class='list' th:if="${items.isEmpty()}">
           <a href="#">
             <img class="item-img"
@@ -127,13 +124,11 @@
 
               <!-- 商品が売れていればsold outを表示しましょう -->
               <div class="sold-out" th:if="${item.soldout}">
-
                 <span>Sold Out!!</span>
               </div>
 
             </div>
             <div class="item-info">
-
               <h3 class="item-name" th:text="${item.name}">
                 商品名
               </h3>
@@ -141,31 +136,12 @@
                 <span>[[${item.price}]] 円<br>[[${item.deliveryFee}]]</span>
                 <div class="star-btn">
                   <img th:src="@{/images/star.png}" class="star-icon" alt="">
-
                   <span class="star-count">0</span>
                 </div>
               </div>
             </div>
           </a>
         </li>
-
-        <!-- 商品がない場合のみ、ダミー商品を表示しましょう -->
-        <li class="list">
-          <a href="#">
-            <img src="/images/item-sample.png" class="item-img" alt="">
-            <div class="item-info">
-              <h3 class="item-name">商品を出品してね！</h3>
-              <div class="item-price">
-                <span>99999999円<br>(税込み)</span>
-                <div class="star-btn">
-                  <img src="/images/star.png" class="star-icon" alt="">
-                  <span class="star-count">0</span>
-                </div>
-              </div>
-            </div>
-          </a>
-        </li>
-
       </ul>
     </div>
     <!-- /商品一覧 -->
