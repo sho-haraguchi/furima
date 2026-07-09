@@ -10,8 +10,8 @@
   <link rel="stylesheet" href="/css/shared/footer.css">
   <link rel="stylesheet" href="/css/shared/errors.css">
   <link rel="stylesheet" href="/css/shared/form.css">
-  <link rel="stylesheet" href="/css/transactions/index.css">
-  <script src="https://js.pay.jp/v1/"></script>
+  <link rel="stylesheet" href="/css/orders/index.css">
+  <script type="text/javascript" src="https://js.pay.jp/v2/pay.js"></script>
 </head>
 <body>
 
@@ -23,11 +23,11 @@
 
     <!-- 購入内容の表示 -->
     <div class="buy-item-info">
-      <img src="${product.img}" class="buy-item-img" alt="">
+      <img src="${product.img}" class="buy-item-img" alt="商品画像">
       <div class="buy-item-right-content">
-        <h2 class="buy-item-text">商品名</h2>
+        <h2 class="buy-item-text" th:text="${product.name}">商品名</h2>
         <div class="buy-item-price">
-          <p class="item-price-text">¥999,999,999</p>
+          <p class="item-price-text" th:text="${'¥' + #numbers.formatInteger(product.price, 3, 'COMMA')}">¥999,999,999</p>
           <p class="item-price-sub-text" th:text="${T(in.tech_camp.furima.enums.DeliveryFeeType).fromCode(product.deliveryFee).label}">配送料負担</p>
         </div>
       </div>
@@ -142,6 +142,6 @@
 </div>
 
 <div th:replace="~{shared/footer :: main-footer}"></div>
-<script src="/js/create_token.js"></script>
+<script th:src="@{/js/card.js}"></script>
 </body>
 </html>
