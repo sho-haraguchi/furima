@@ -1,7 +1,8 @@
 package in.tech_camp.furima.service;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
@@ -48,16 +49,17 @@ public class ProductService {
         MultipartFile imgFile = form.getImg();
 
         if (imgFile != null && !imgFile.isEmpty()) {
-            String originalFilename = imgFile.getOriginalFilename();
-            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-            imageName = UUID.randomUUID().toString() + extension;
+            String uuid = UUID.randomUUID().toString();
+            imageName = uuid + "-" + imgFile.getOriginalFilename();
 
-            String uploadDir = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static", "images").toString();
-            File dir = new File(uploadDir);
-            if (!dir.exists()) {
-                dir.mkdirs();
+            Path uploadDir = Paths.get("uploads").toAbsolutePath();
+            
+            if (!Files.exists(uploadDir)) {
+                Files.createDirectories(uploadDir);
             }
-            imgFile.transferTo(new File(dir, imageName));
+            
+            Path imagePath = uploadDir.resolve(imageName);
+            Files.copy(imgFile.getInputStream(), imagePath);
         }
 
         ProductEntity product = new ProductEntity();

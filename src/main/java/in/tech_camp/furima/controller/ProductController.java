@@ -43,7 +43,7 @@ public class ProductController {
     @PostMapping("/items")
     public String createProduct(@ModelAttribute @Validated ProductForm productForm,
             BindingResult bindingResult,
-            Model model) throws IOException {
+            Model model) {
 
         if (productForm.getImg() == null || productForm.getImg().isEmpty()) {
             bindingResult.rejectValue("img", "error.productForm", "出品画像を選択してください");
@@ -55,7 +55,16 @@ public class ProductController {
         }
 
         Long loginUserId = 1L;
-        productService.saveProduct(productForm, loginUserId);
+
+        try {
+            productService.saveProduct(productForm, loginUserId);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            bindingResult.rejectValue("img", "error.productForm", "画像の保存中にエラーが発生しました");
+            addEnumAttributesToModel(model);
+            return "items/new";
+        }
         return "redirect:/";
     }
 
