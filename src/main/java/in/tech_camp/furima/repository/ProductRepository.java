@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 import in.tech_camp.furima.dto.repository.ProductDetailQueryResult;
 import in.tech_camp.furima.dto.repository.ProductQueryResult;
 import in.tech_camp.furima.entity.ProductEntity;
+import in.tech_camp.furima.form.ProductEditForm;
 
 @Mapper
 public interface ProductRepository {
@@ -51,11 +52,11 @@ public interface ProductRepository {
   @Update("""
       UPDATE products
       SET img = #{img},name = #{name},description = #{description},
-      category = #{category},conditon = #{conditon},delivery_fee = #{deliveryFee},
-      prefecture = ${prefecture},until_delivery = #{untilDelivery},price = #{price}
+      category = #{category},condition = #{condition},delivery_fee = #{deliveryFee},
+      prefecture = #{prefecture},until_delivery = #{untilDelivery},price = #{price}
       WHERE id = #{id}
       """)
-  int updateByProductId(Long id);
+  int updateByProductId(ProductEditForm productEditForm);
 
   // 商品出品機能
   @Insert("INSERT INTO products (user_id, name, description, category, condition, delivery_fee, prefecture, until_delivery, price, img) VALUES (#{userId}, #{name}, #{description}, #{category}, #{condition}, #{deliveryFee}, #{prefecture}, #{untilDelivery}, #{price}, #{img})")
