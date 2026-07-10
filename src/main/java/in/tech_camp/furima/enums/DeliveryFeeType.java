@@ -27,7 +27,7 @@ public enum DeliveryFeeType {
         return until;
       }
     }
-    throw new IllegalArgumentException("不正な発送日数表示です: " + displayName);
+    throw new IllegalArgumentException("不正な配送料負担表示です: " + displayName);
   }
 
 }

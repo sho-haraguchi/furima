@@ -31,6 +31,6 @@ public enum Condition {
                 return until;
             }
         }
-        throw new IllegalArgumentException("不正な発送日数表示です: " + displayName);
+        throw new IllegalArgumentException("不正な商品状態表示です: " + displayName);
     }
 }

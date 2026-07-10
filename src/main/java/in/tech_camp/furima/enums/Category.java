@@ -36,6 +36,6 @@ public enum Category {
                 return until;
             }
         }
-        throw new IllegalArgumentException("不正な発送日数表示です: " + displayName);
+        throw new IllegalArgumentException("不正なカテゴリー表示です: " + displayName);
     }
 }

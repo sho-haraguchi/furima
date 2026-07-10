@@ -76,7 +76,7 @@ public enum PrefectureType {
         return until;
       }
     }
-    throw new IllegalArgumentException("不正な発送日数表示です: " + displayName);
+    throw new IllegalArgumentException("不正な都道府県表示です: " + displayName);
   }
 
 }
