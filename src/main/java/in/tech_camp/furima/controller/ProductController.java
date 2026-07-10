@@ -74,7 +74,7 @@ public class ProductController {
     private void addEnumAttributesToModel(Model model) {
         model.addAttribute("categories", Category.values());
         model.addAttribute("conditions", Condition.values());
-        model.addAttribute("deliveryFees", DeliveryFee.values());
+        model.addAttribute("deliveryFees", DeliveryFeeType.values());
         model.addAttribute("prefectures", PrefectureType.values());
         model.addAttribute("untilDeliveries", UntilDelivery.values());
     }
