@@ -21,6 +21,7 @@ import in.tech_camp.furima.enums.Condition;
 import in.tech_camp.furima.enums.DeliveryFeeType;
 import in.tech_camp.furima.enums.PrefectureType;
 import in.tech_camp.furima.enums.UntilDelivery;
+import in.tech_camp.furima.form.ProductEditForm;
 import in.tech_camp.furima.form.ProductForm;
 import in.tech_camp.furima.repository.ProductRepository;
 
@@ -114,14 +115,13 @@ public class ProductService {
 
   // 商品削除
   @Transactional
-  public int deleteByProductId(Long id,Long userId) {
+  public int deleteByProductId(Long id, Long userId) {
 
     if (!productRepository.existsByIdANDUserId(id, userId)) {
       throw new RuntimeException("所有者ではありませんので削除できません");
-    }    
+    }
 
     int result = productRepository.deleteByProductId(id);
-
 
     if (result <= 0) {
       throw new RuntimeException("削除できませんでした");
@@ -133,13 +133,66 @@ public class ProductService {
 
   }
 
+  // 商品更新ページ
+  @Transactional
+  public ProductForm showEditProduct(ProductDetailDto dto,Long userId) {
+
+    if (!productRepository.existsByIdANDUserId(dto.getId(), userId)) {
+      throw new RuntimeException("所有者ではありませんので削除できません");
+    }
+
+    ProductForm form = new ProductForm();
+    form.setName(dto.getName());
+    form.setDescription(dto.getDescription());
+    form.setCategory(Category.fromDisplayName(dto.getCategory()).getCode());
+    form.setCondition(Condition.fromDisplayName(dto.getCondition()).getCode());
+    form.setDeliveryFee(DeliveryFeeType.fromDisplayName(dto.getDeliveryFee()).getCode());
+    form.setPrefecture(PrefectureType.fromDisplayName(dto.getPrefecture()).getCode());
+    form.setUntilDelivery(UntilDelivery.fromDisplayName(dto.getUntilDelivery()).getCode());
+    form.setPrice(dto.getPrice());
+
+    return form;
+  }
+
   // 商品更新
   @Transactional
-  public int updateByProductId(Long id) {
+  public int updateByProductId(Long id, ProductForm productForm, Long userId, String image) throws IOException {
 
-    int result = productRepository.updateByProductId(id);
+    // dtoから受け取る -> dbのほうはint型なのでserviceでdtoをint型に変換 もしくは thymeleaf側で変換
 
-    System.out.println("更新結果 : " + result);
+    String imageName = null;
+    MultipartFile imgFile = productForm.getImg();
+
+    if (imgFile != null && !imgFile.isEmpty()) {
+      String uuid = UUID.randomUUID().toString();
+      imageName = uuid + "-" + imgFile.getOriginalFilename();
+
+      Path uploadDir = Paths.get("uploads").toAbsolutePath();
+
+      if (!Files.exists(uploadDir)) {
+        Files.createDirectories(uploadDir);
+      }
+
+      Path imagePath = uploadDir.resolve(imageName);
+      Files.copy(imgFile.getInputStream(), imagePath);
+    }
+
+    ProductEditForm product = new ProductEditForm();
+    product.setId(id);
+    if (imageName == null) {
+      imageName = image;
+    }
+    product.setImg(imageName);
+    product.setName(productForm.getName());
+    product.setDescription(productForm.getDescription());
+    product.setCategory(productForm.getCategory());
+    product.setCondition(productForm.getCondition());
+    product.setDeliveryFee(productForm.getDeliveryFee());
+    product.setPrefecture(productForm.getPrefecture());
+    product.setUntilDelivery(productForm.getUntilDelivery());
+    product.setPrice(productForm.getPrice());
+
+    int result = productRepository.updateByProductId(product);
 
     if (result <= 0) {
       throw new RuntimeException("削除できませんでした");
