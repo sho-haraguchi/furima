@@ -15,7 +15,7 @@ import lombok.Data;
 @ValidDate(groups = GroupOrder.Group3.class)
 public class RegisterForm {
 
-    @NotBlank(message = "ニックネームを入力してください", groups = GroupOrder.Group1.class)
+    @NotBlank(message = "ニックネームを入力してください")
     private String nickname;
 
     @NotBlank(message = "メールアドレスを入力してください", groups = GroupOrder.Group1.class)
@@ -27,7 +27,7 @@ public class RegisterForm {
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$", message = "パスワードは半角英数字混合で入力してください", groups = GroupOrder.Group2.class)
     private String password;
 
-    @NotBlank(message = "パスワード（確認）を入力してください", groups = GroupOrder.Group1.class)
+    @NotBlank(message = "パスワード（確認）を入力してください")
     private String passwordConfirmation;
 
     @NotBlank(message = "名字を入力してください", groups = GroupOrder.Group1.class)
@@ -46,12 +46,12 @@ public class RegisterForm {
     @Pattern(regexp = "^[ァ-ヶー]+$", message = "名前（カナ）は全角カタカナで入力してください", groups = GroupOrder.Group2.class)
     private String firstNameKana;
 
-    @NotNull(message = "誕生年を選択してください", groups = GroupOrder.Group1.class)
+    @NotNull(message = "誕生年を選択してください")
     private Integer birthYear;
 
-    @NotNull(message = "誕生月を選択してください", groups = GroupOrder.Group1.class)
+    @NotNull(message = "誕生月を選択してください")
     private Integer birthMonth;
 
-    @NotNull(message = "誕生日を選択してください", groups = GroupOrder.Group1.class)
+    @NotNull(message = "誕生日を選択してください")
     private Integer birthDay;
 }
