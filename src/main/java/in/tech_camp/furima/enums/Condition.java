@@ -26,9 +26,9 @@ public enum Condition {
     }
 
     public static Condition fromDisplayName(String displayName) {
-        for (Condition until : Condition.values()) {
-            if (until.getDisplayName().equals(displayName)) {
-                return until;
+        for (Condition condition : Condition.values()) {
+            if (condition.getDisplayName().equals(displayName)) {
+                return condition;
             }
         }
         throw new IllegalArgumentException("不正な商品状態表示です: " + displayName);

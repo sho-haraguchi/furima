@@ -22,9 +22,9 @@ public enum DeliveryFeeType {
   }
 
   public static DeliveryFeeType fromDisplayName(String displayName) {
-    for (DeliveryFeeType until : DeliveryFeeType.values()) {
-      if (until.getLabel().equals(displayName)) {
-        return until;
+    for (DeliveryFeeType deliveryFeeType : DeliveryFeeType.values()) {
+      if (deliveryFeeType.getLabel().equals(displayName)) {
+        return deliveryFeeType;
       }
     }
     throw new IllegalArgumentException("不正な配送料負担表示です: " + displayName);

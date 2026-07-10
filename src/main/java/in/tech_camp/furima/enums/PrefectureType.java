@@ -71,9 +71,9 @@ public enum PrefectureType {
   }
 
   public static PrefectureType fromDisplayName(String displayName) {
-    for (PrefectureType until : PrefectureType.values()) {
-      if (until.getLabel().equals(displayName)) {
-        return until;
+    for (PrefectureType prefectureType : PrefectureType.values()) {
+      if (prefectureType.getLabel().equals(displayName)) {
+        return prefectureType;
       }
     }
     throw new IllegalArgumentException("不正な都道府県表示です: " + displayName);

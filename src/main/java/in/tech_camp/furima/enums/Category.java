@@ -31,9 +31,9 @@ public enum Category {
     }
 
     public static Category fromDisplayName(String displayName) {
-        for (Category until : Category.values()) {
-            if (until.getDisplayName().equals(displayName)) {
-                return until;
+        for (Category category : Category.values()) {
+            if (category.getDisplayName().equals(displayName)) {
+                return category;
             }
         }
         throw new IllegalArgumentException("不正なカテゴリー表示です: " + displayName);
