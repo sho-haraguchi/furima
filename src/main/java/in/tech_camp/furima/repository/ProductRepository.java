@@ -1,8 +1,10 @@
 package in.tech_camp.furima.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Delete;
+import in.tech_camp.furima.entity.ProductEntity;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -16,6 +18,10 @@ import in.tech_camp.furima.form.ProductEditForm;
 
 @Mapper
 public interface ProductRepository {
+  // 商品出品機能
+  @Insert("INSERT INTO products (user_id, name, description, category, condition, delivery_fee, prefecture, until_delivery, price, img) VALUES (#{userId}, #{name}, #{description}, #{category}, #{condition}, #{deliveryFee}, #{prefecture}, #{untilDelivery}, #{price}, #{img})")
+  @Options(useGeneratedKeys = true, keyProperty = "id")
+  void insert(ProductEntity product);
 
   // 商品一覧表示機能
   @Select("""
@@ -63,4 +69,7 @@ public interface ProductRepository {
   @Options(useGeneratedKeys = true, keyProperty = "id")
   void insert(ProductEntity product);
 
+  // 1件取得
+  @Select("SELECT * FROM products WHERE id = #{id}")
+  Optional<ProductEntity> findById(Long id);
 }
