@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class UserEntity {
+
   private Long id;
   private String nickname;
   private String email;
@@ -15,4 +16,5 @@ public class UserEntity {
   private String lastNameKana;
   private String firstNameKana;
   private LocalDate birthday;
+
 }
