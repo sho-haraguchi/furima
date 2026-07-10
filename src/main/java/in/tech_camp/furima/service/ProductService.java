@@ -195,9 +195,9 @@ public class ProductService {
     int result = productRepository.updateByProductId(product);
 
     if (result <= 0) {
-      throw new RuntimeException("削除できませんでした");
+      throw new RuntimeException("編集できませんでした");
     } else if (result >= 2) {
-      throw new RuntimeException("予想された挙動とは異なったため削除できませんでした");
+      throw new RuntimeException("予想された挙動とは異なったため編集できませんでした");
     }
 
     return result;
