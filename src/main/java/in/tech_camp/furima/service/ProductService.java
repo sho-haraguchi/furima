@@ -114,11 +114,14 @@ public class ProductService {
 
   // 商品削除
   @Transactional
-  public int deleteByProductId(Long id) {
+  public int deleteByProductId(Long id,Long userId) {
+
+    if (!productRepository.existsByIdANDUserId(id, userId)) {
+      throw new RuntimeException("所有者ではありませんので削除できません");
+    }    
 
     int result = productRepository.deleteByProductId(id);
 
-    System.out.println("削除結果 : " + result);
 
     if (result <= 0) {
       throw new RuntimeException("削除できませんでした");

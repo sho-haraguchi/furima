@@ -45,6 +45,7 @@ public class ProductController {
 
     ProductDetailDto dto = productService.selectByProductId(id);
 
+
     model.addAttribute("item", dto);
 
     return "items/show";
@@ -53,9 +54,14 @@ public class ProductController {
 
   // 商品削除
   @PostMapping("/items/delete/{id}")
-  public String postMethodName(@PathVariable Long id, Model model) {
+  public String postMethodName(@PathVariable Long id, Model model,@AuthenticationPrincipal CustomUserDetails loginUser) {
 
-    productService.deleteByProductId(id);
+
+    try {
+      productService.deleteByProductId(id,loginUser.getId());
+    } catch (Exception e) {
+      return "items/show";
+    }
 
     return "redirect:/";
   }

@@ -43,6 +43,10 @@ public interface ProductRepository {
   @Delete("DELETE FROM products WHERE id = #{id}")
   int deleteByProductId(Long id);
 
+  // 出品者どうかを判別
+  @Select("SELECT COUNT(*) > 0 FROM products WHERE id = #{id} AND user_id = #{userId} ")
+  boolean existsByIdANDUserId(Long id,Long userId);
+
   // 更新
   @Update("""
       UPDATE products
