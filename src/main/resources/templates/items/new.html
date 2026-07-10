@@ -17,7 +17,7 @@
     <h2 class="items-sell-title">商品の情報を入力</h2>
 
     <!-- formのactionとth:objectを設定しましょう。 -->
-    <form action="/items" th:object="${productForm}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/items}" th:object="${productForm}" method="post" enctype="multipart/form-data">
       <!-- エラーメッセージを表示できるようにしましょう。 -->
 
       <div class="error-messages" th:if="${#fields.hasAnyErrors()}">
@@ -80,12 +80,12 @@
           <div class="weight-bold-text">配送料の負担 <span class="indispensable">必須</span></div>
           <select th:field="*{deliveryFee}" class="select-box" id="item-shipping-fee-status">
             <option value="">---</option>
-            <option th:each="fee : ${deliveryFees}" th:value="${fee.code}" th:text="${fee.displayName}"></option>
+            <option th:each="fee : ${deliveryFees}" th:value="${fee.code}" th:text="${fee.label}"></option>
           </select>
           <div class="weight-bold-text">発送元の地域 <span class="indispensable">必須</span></div>
           <select th:field="*{prefecture}" class="select-box" id="item-prefecture">
             <option value="">---</option>
-            <option th:each="pref : ${prefectures}" th:value="${pref.code}" th:text="${pref.displayName}"></option>
+            <option th:each="pref : ${prefectures}" th:value="${pref.code}" th:text="${pref.label}"></option>
           </select>
           <div class="weight-bold-text">発送までの日数 <span class="indispensable">必須</span></div>
           <select th:field="*{untilDelivery}" class="select-box" id="item-scheduled-delivery">
