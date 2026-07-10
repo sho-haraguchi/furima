@@ -21,7 +21,7 @@ public class ValidDateValidator implements ConstraintValidator<ValidDate, Regist
     } catch (DateTimeException e) {
       context.disableDefaultConstraintViolation();
       context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate())
-          .addPropertyNode("BirthDay")
+          .addPropertyNode("birthDay")
           .addConstraintViolation();
       return false;
     }
