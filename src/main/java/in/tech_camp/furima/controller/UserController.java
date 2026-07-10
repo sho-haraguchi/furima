@@ -73,14 +73,4 @@ public class UserController {
         registerForm.setPasswordConfirmation("");
     }
 
-    @GetMapping("/users/sign_out")
-    public String logout(HttpServletRequest request) {
-        try {
-            request.logout();
-        } catch (ServletException e) {
-            return "redirect:/";
-        }
-        return "redirect:/";
-    }
-
 }
