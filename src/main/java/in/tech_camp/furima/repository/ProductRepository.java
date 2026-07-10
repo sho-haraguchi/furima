@@ -15,7 +15,7 @@ public interface ProductRepository {
 
     // 商品一覧表示機能
     @Select("""
-        SELECT p.id,p.img,p.name,p.price,p.delivery_fee,b.product_id FROM products p
+        SELECT p.id,p.img,p.name,p.price,p.delivery_fee AS deilveryFee,b.product_id AS productId FROM products p
         LEFT JOIN buys b
         ON p.id = b.product_id
         ORDER BY p.id DESC
