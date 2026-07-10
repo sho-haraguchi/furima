@@ -99,6 +99,7 @@ public class ProductController {
 
     if (bindingResult.hasErrors()) {
       addEnumAttributesToModel(model);
+      model.addAttribute("item", dto);
       return "items/edit";
     }
 
