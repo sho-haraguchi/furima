@@ -138,7 +138,7 @@ public class ProductService {
   public ProductForm showEditProduct(ProductDetailDto dto,Long userId) {
 
     if (!productRepository.existsByIdANDUserId(dto.getId(), userId)) {
-      throw new RuntimeException("所有者ではありませんので削除できません");
+      throw new RuntimeException("所有者ではありませんので編集できません");
     }
 
     ProductForm form = new ProductForm();
