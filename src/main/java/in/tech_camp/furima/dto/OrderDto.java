@@ -30,7 +30,7 @@ public class OrderDto {
     private String city;
 
     // 番地
-    @NotBlank(message = "Addresses can't be blank")
+    @NotBlank(message = "Block can't be blank")
     private String block;
 
     // 建物（任意入力）
