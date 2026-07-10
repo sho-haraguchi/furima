@@ -20,11 +20,16 @@
         <li><a href="#" class="category-list">カテゴリー</a></li>
         <li><a href="#" class="brand-list">ブランド</a></li>
       </ul>
-      
+
       <ul class="lists-right">
         <th:block sec:authorize="isAuthenticated()">
           <li><a href="#" class="user-nickname" sec:authentication="name">ユーザー名</a></li>
-          <li><a th:href="@{/logout}" class="logout">ログアウト</a></li>
+          <!-- <li><a th:href="@{/users/sign_out}" class="logout" method="post">ログアウト</a> -->
+          <li>
+            <form th:action="@{/users/sign_out}" method="post" class="logout-form">
+              <button type="submit" class="logout">ログアウト</button>
+            </form>
+          </li>
         </th:block>
 
         <th:block sec:authorize="isAnonymous()">
@@ -32,7 +37,7 @@
           <li><a th:href="@{/users/sign_up}" class="sign-up">新規登録</a></li>
         </th:block>
       </ul>
-      
+
     </div>
   </header>
 
