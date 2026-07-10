@@ -46,12 +46,12 @@ public class RegisterForm {
     @Pattern(regexp = "^[ァ-ヶー]+$", message = "名前（カナ）は全角カタカナで入力してください", groups = GroupOrder.Group2.class)
     private String firstNameKana;
 
-    @NotNull(message = "誕生年を選択してください")
+    @NotNull(message = "誕生年を選択してください", groups = GroupOrder.Group3.class)
     private Integer birthYear;
 
-    @NotNull(message = "誕生月を選択してください")
+    @NotNull(message = "誕生月を選択してください", groups = GroupOrder.Group3.class)
     private Integer birthMonth;
 
-    @NotNull(message = "誕生日を選択してください")
+    @NotNull(message = "誕生日を選択してください", groups = GroupOrder.Group3.class)
     private Integer birthDay;
 }

@@ -23,7 +23,7 @@
 
       <ul class="lists-right">
         <th:block sec:authorize="isAuthenticated()">
-          <li><a href="#" class="user-nickname" sec:authentication="name">ユーザー名</a></li>
+          <li><a href="#" class="user-nickname" th:text="${#authentication.principal.user.nickname}">ユーザー名</a></li>
           <!-- <li><a th:href="@{/users/sign_out}" class="logout" method="post">ログアウト</a> -->
           <li>
             <form th:action="@{/users/sign_out}" method="post" class="logout-form">
