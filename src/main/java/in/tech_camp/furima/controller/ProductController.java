@@ -93,13 +93,13 @@ public class ProductController {
 
     ProductDetailDto dto = productService.selectByProductId(id);
 
-    if (dto.getUserId() != loginUser.getId()) {
+    if (!dto.getUserId().equals(loginUser.getId())) {
       return "redirect:/items/" + id;
     }
 
     if (bindingResult.hasErrors()) {
       addEnumAttributesToModel(model);
-      return "items/new";
+      return "items/edit";
     }
 
     try {
@@ -108,7 +108,7 @@ public class ProductController {
       bindingResult.rejectValue("img", "error.productForm", "画像の保存中にエラーが発生しました");
       addEnumAttributesToModel(model);
       model.addAttribute("item", dto);
-      return "/items/edit";
+      return "items/edit";
     }
 
     return "redirect:/items/" + id;
