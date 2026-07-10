@@ -24,7 +24,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/login")
+    @GetMapping("/users/sign_in")
     public String login() {
         return "users/sign_in";
     }
@@ -37,7 +37,7 @@ public class UserController {
 
     @PostMapping("/users/sign_up")
     public String userInsert(@Validated @ModelAttribute("registerForm") RegisterForm registerForm,
-                             BindingResult result, HttpServletRequest request) {
+            BindingResult result, HttpServletRequest request) {
 
         // 1. 基本的なアノテーションバリデーション（@NotBlankなど）のエラー判定
         if (result.hasErrors()) {
@@ -47,12 +47,10 @@ public class UserController {
 
         // 2. サービス層でのビジネスロジックチェック
         Map<String, String> customErrors = userService.validateRegistration(registerForm);
-        
+
         // エラーのMapが空でない（＝エラーがある）場合の処理
         if (!customErrors.isEmpty()) {
-            customErrors.forEach((field, message) -> 
-                result.rejectValue(field, "error." + field, message)
-            );
+            customErrors.forEach((field, message) -> result.rejectValue(field, "error." + field, message));
             errorSetPassForm(registerForm);
             return "users/sign_up";
         }
@@ -74,4 +72,5 @@ public class UserController {
         registerForm.setPassword("");
         registerForm.setPasswordConfirmation("");
     }
+
 }

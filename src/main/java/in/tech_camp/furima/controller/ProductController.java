@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import in.tech_camp.furima.dto.ProductDetailDto;
 import in.tech_camp.furima.enums.Category;
 import in.tech_camp.furima.enums.Condition;
-import in.tech_camp.furima.enums.DeliveryFee;
+import in.tech_camp.furima.enums.DeliveryFeeType;
 import in.tech_camp.furima.enums.PrefectureType;
 import in.tech_camp.furima.enums.UntilDelivery;
 import in.tech_camp.furima.form.ProductForm;
@@ -111,11 +111,11 @@ public class ProductController {
     return "redirect:/";
   }
 
-  private void addEnumAttributesToModel(Model model) {
-    model.addAttribute("categories", Category.values());
-    model.addAttribute("conditions", Condition.values());
-    model.addAttribute("deliveryFees", DeliveryFee.values());
-    model.addAttribute("prefectures", PrefectureType.values());
-    model.addAttribute("untilDeliveries", UntilDelivery.values());
-  }
+    private void addEnumAttributesToModel(Model model) {
+        model.addAttribute("categories", Category.values());
+        model.addAttribute("conditions", Condition.values());
+        model.addAttribute("deliveryFees", DeliveryFeeType.values());
+        model.addAttribute("prefectures", PrefectureType.values());
+        model.addAttribute("untilDeliveries", UntilDelivery.values());
+    }
 }
