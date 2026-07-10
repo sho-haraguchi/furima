@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -53,6 +54,7 @@ public class ProductController {
   }
 
   // 商品削除
+  @Transactional
   @PostMapping("/items/delete/{id}")
   public String deleteProduct(@PathVariable Long id, Model model,@AuthenticationPrincipal CustomUserDetails loginUser) {
 
