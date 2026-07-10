@@ -108,7 +108,7 @@ public class ProductController {
     }
 
     try {
-      productService.updateByProductId(id, productForm, loginUser.getId(), dto.getImg(),dto.getUserId());
+      productService.updateByProductId(id, productForm, loginUser.getId(), dto.getImg());
     } catch (IOException e) {
       bindingResult.rejectValue("img", "error.productForm", "画像の保存中にエラーが発生しました");
       addEnumAttributesToModel(model);
