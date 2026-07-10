@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import in.tech_camp.furima.dto.ProductDetailDto;
 import in.tech_camp.furima.enums.Category;
 import in.tech_camp.furima.enums.Condition;
-import in.tech_camp.furima.enums.DeliveryFee;
+import in.tech_camp.furima.enums.DeliveryFeeType;
 import in.tech_camp.furima.enums.PrefectureType;
 import in.tech_camp.furima.enums.UntilDelivery;
 import in.tech_camp.furima.form.ProductForm;
@@ -53,17 +52,76 @@ public class ProductController {
 
   // 商品削除
   @PostMapping("/items/delete/{id}")
-  public String postMethodName(@PathVariable Long id, Model model) {
+  public String deleteProduct(@PathVariable Long id, Model model,
+      @AuthenticationPrincipal CustomUserDetails loginUser) {
 
-    productService.deleteByProductId(id);
+    try {
+      productService.deleteByProductId(id, loginUser.getId());
+    } catch (Exception e) {
+      return "redirect:/items/" + id;
+    }
 
     return "redirect:/";
   }
 
   // 商品編集
-  @GetMapping("path")
-  public String getMethodName(@RequestParam String param) {
-    return new String();
+  @GetMapping("/items/edit/{id}")
+  public String showProductEdit(@PathVariable Long id, Model model,
+      @AuthenticationPrincipal CustomUserDetails loginUser) {
+
+    ProductDetailDto dto = productService.selectByProductId(id);
+
+    if (dto.isSoldout()) {
+      return "redirect:/";
+    }
+
+    // その商品の情報を取得
+    model.addAttribute("item", dto);
+    try {
+      model.addAttribute("productForm", productService.showEditProduct(dto, loginUser.getId()));
+    } catch (Exception e) {
+      return "redirect:/items/" + id;
+    }
+
+    addEnumAttributesToModel(model);
+
+    return "items/edit";
+  }
+
+  // 商品編集
+  @PostMapping("/items/edit/{id}")
+  public String updateProduct(@PathVariable Long id, Model model,
+      @AuthenticationPrincipal CustomUserDetails loginUser,
+      @ModelAttribute @Validated ProductForm productForm,
+      BindingResult bindingResult) {
+
+    ProductDetailDto dto = productService.selectByProductId(id);
+
+    if (dto.isSoldout()) {
+      return "redirect:/";
+    }
+
+    if (bindingResult.hasErrors()) {
+      addEnumAttributesToModel(model);
+      model.addAttribute("item", dto);
+      return "items/edit";
+    }
+
+    try {
+      productService.updateByProductId(id, productForm, loginUser.getId(), dto.getImg());
+    } catch (IOException e) {
+      bindingResult.rejectValue("img", "error.productForm", "画像の保存中にエラーが発生しました");
+      addEnumAttributesToModel(model);
+      model.addAttribute("item", dto);
+      return "items/edit";
+    } catch (RuntimeException e) {
+      bindingResult.reject("error.productForm", e.getMessage());
+      addEnumAttributesToModel(model);
+      model.addAttribute("item", dto);
+      return "items/edit";
+    }
+
+    return "redirect:/items/" + id;
   }
 
   // 商品出品機能
@@ -108,7 +166,7 @@ public class ProductController {
   private void addEnumAttributesToModel(Model model) {
     model.addAttribute("categories", Category.values());
     model.addAttribute("conditions", Condition.values());
-    model.addAttribute("deliveryFees", DeliveryFee.values());
+    model.addAttribute("deliveryFees", DeliveryFeeType.values());
     model.addAttribute("prefectures", PrefectureType.values());
     model.addAttribute("untilDeliveries", UntilDelivery.values());
   }

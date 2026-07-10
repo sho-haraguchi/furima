@@ -21,4 +21,13 @@ public enum UntilDelivery {
         }
         throw new IllegalArgumentException("不正な発送日数コードです: " + code);
     }
+
+    public static UntilDelivery fromDisplayName(String displayName) {
+        for (UntilDelivery until : UntilDelivery.values()) {
+            if (until.getDisplayName().equals(displayName)) {
+                return until;
+            }
+        }
+        throw new IllegalArgumentException("不正な発送日数表示です: " + displayName);
+    }
 }

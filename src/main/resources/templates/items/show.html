@@ -29,7 +29,7 @@
 
       </div>
       <div class="item-price-box">
-        <span class="item-price"th:text="'¥ ' + ${#numbers.formatInteger(item.price, 3, 'COMMA')}">
+        <span class="item-price" th:text="'¥ ' + ${#numbers.formatInteger(item.price, 3, 'COMMA')}">
           ¥ 999,999,999
         </span>
         <span class="item-postage" th:text="${item.deliveryFee}">
@@ -39,7 +39,8 @@
 
       <!-- ログインしているユーザーと出品しているユーザーが、同一人物の場合と同一人物ではない場合で、処理を分けましょう -->
       <th:block sec:authorize="isAuthenticated()" th:if="${!item.soldout}">
-        <a href="#" class="item-red-btn" th:if="${#authentication.principal.id == item.userId}">商品の編集</a>
+        <a th:href="@{/items/edit/{id}(id=${item.id})}" class="item-red-btn"
+          th:if="${#authentication.principal.id == item.userId}">商品の編集</a>
         <p class="or-text" th:if="${#authentication.principal.id == item.userId}">or</p>
         <form th:action="@{/items/delete/{id}(id=${item.id})}" method="post"
           th:if="${#authentication.principal.id == item.userId}">
@@ -48,10 +49,12 @@
       </th:block>
 
       <!-- 商品が売れていない場合はこちらを表示しましょう -->
-      <a href="" class="item-red-btn" th:if="${!item.soldout}" sec:authorize="isAuthenticated()">購入画面に進む</a>
+      <th:block sec:authorize="isAuthenticated()" th:if="${!item.soldout}">
+        <a href="" class="item-red-btn" th:if="${#authentication.principal.id != item.userId}">購入画面に進む</a>
+      </th:block>
 
       <div class="item-explain-box">
-        <span>商品説明</span>
+        <span th:text="${item.description}">商品説明</span>
       </div>
       <table class="detail-table">
         <tbody>
