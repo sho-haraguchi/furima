@@ -71,6 +71,10 @@ public class ProductController {
 
     ProductDetailDto dto = productService.selectByProductId(id);
 
+    if (dto.isSoldout()) {
+      return "redirect:/";
+    }
+
     // その商品の情報を取得
     model.addAttribute("item", dto);
     try {
@@ -92,6 +96,10 @@ public class ProductController {
       BindingResult bindingResult) {
 
     ProductDetailDto dto = productService.selectByProductId(id);
+
+    if (dto.isSoldout()) {
+      return "redirect:/";
+    }
 
     if (!dto.getUserId().equals(loginUser.getId())) {
       return "redirect:/items/" + id;
