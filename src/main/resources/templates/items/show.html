@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <title>商品詳細 - Furima</title>
-  <link rel="stylesheet" href="/css/application.css">
-  <link rel="stylesheet" href="/css/shared/header.css">
-  <link rel="stylesheet" href="/css/shared/footer.css">
-  <link rel="stylesheet" href="/css/items/show.css">
+  <link rel="stylesheet" th:href="@{/css/application.css}">
+  <link rel="stylesheet" th:href="@{/css/shared/header.css}">
+  <link rel="stylesheet" th:href="@{/css/shared/footer.css}">
+  <link rel="stylesheet" th:href="@{/css/items/show.css}">
 </head>
+
 <body>
   <div th:replace="~{shared/header :: top-header}"></div>
 
   <!-- 商品の概要 -->
   <div class="item-show">
     <div class="item-box">
-      <h2 class="name">
+      <h2 class="name" th:text="${item.name}">
         商品名
       </h2>
       <div class="item-img-content">
-        <img src="/images/item-sample.png" class="item-box-img" alt="">
+        <img th:src="@{|/uploads/${item.img}|}" class="item-box-img" alt="">
 
         <!-- 商品が売れている場合は、sold outを表示しましょう -->
-        <div class="sold-out">
+        <div class="sold-out" th:if="${item.soldout}" >
           <span>Sold Out!!</span>
         </div>
 
       </div>
       <div class="item-price-box">
-        <span class="item-price">
+        <span class="item-price" th:text="${item.price} + 円">
           ¥ 999,999,999
         </span>
-        <span class="item-postage">
+        <span class="item-postage" th:text="${item.deliveryFee}">
           配送料負担
         </span>
       </div>
 
       <!-- ログインしているユーザーと出品しているユーザーが、同一人物の場合と同一人物ではない場合で、処理を分けましょう -->
 
-      <a href="#" class="item-red-btn">商品の編集</a>
-      <p class="or-text">or</p>
-      <form action="hoge" method="post">
+      <a href="#" class="item-red-btn" sec:authorize="isAuthenticated()" th:if="${loginUser == item.userId}">商品の編集</a>
+      <p class="or-text" sec:authorize="isAuthenticated()" th:if="${loginUser == item.userId}">or</p>
+      <form th:action="@{/items/delete/{id}(id=${item.id})}" method="post"  sec:authorize="isAuthenticated()" th:if="${loginUser == item.userId}" >
         <button type="submit" class="item-destroy">削除</button>
       </form>
 
       <!-- 商品が売れていない場合はこちらを表示しましょう -->
-      <a href="#" class="item-red-btn">購入画面に進む</a>
+      <a href="" class="item-red-btn" th:if="${!item.soldout}" sec:authorize="isAuthenticated()" >購入画面に進む</a>
 
       <div class="item-explain-box">
         <span>商品説明</span>
@@ -53,37 +55,37 @@
         <tbody>
           <tr>
             <th class="detail-item">出品者</th>
-            <td class="detail-value">出品者名</td>
+            <td class="detail-value" th:text="${item.nickname}">出品者名</td>
           </tr>
           <tr>
             <th class="detail-item">カテゴリー</th>
-            <td class="detail-value">カテゴリー名</td>
+            <td class="detail-value" th:text="${item.category}">カテゴリー名</td>
           </tr>
           <tr>
             <th class="detail-item">商品の状態</th>
-            <td class="detail-value">商品の状態</td>
+            <td class="detail-value" th:text="${item.condition}">商品の状態</td>
           </tr>
           <tr>
             <th class="detail-item">配送料の負担</th>
-            <td class="detail-value">発送料の負担</td>
+            <td class="detail-value" th:text="${item.deliveryFee}">発送料の負担</td>
           </tr>
           <tr>
             <th class="detail-item">発送元の地域</th>
-            <td class="detail-value">発送元の地域</td>
+            <td class="detail-value" th:text="${item.prefecture}">発送元の地域</td>
           </tr>
           <tr>
             <th class="detail-item">発送日の目安</th>
-            <td class="detail-value">発送日の目安</td>
+            <td class="detail-value" th:text="${item.untilDelivery}">発送日の目安</td>
           </tr>
         </tbody>
       </table>
       <div class="option">
         <div class="favorite-btn">
-          <img src="/images/star.png" class="favorite-star-icon" width="20" height="20" alt="">
+          <img th:src="@{/images/star.png}" class="favorite-star-icon" width="20" height="20" alt="">
           <span>お気に入り 0</span>
         </div>
         <div class="report-btn">
-          <img src="/images/flag.png" class="report-flag-icon" width="20" height="20" alt="">
+          <img th:src="@{/images/flag.png}" class="report-flag-icon" width="20" height="20" alt="">
           <span>不適切な商品の通報</span>
         </div>
       </div>
@@ -114,4 +116,5 @@
 
   <div th:replace="~{shared/footer :: main-footer}"></div>
 </body>
+
 </html>
