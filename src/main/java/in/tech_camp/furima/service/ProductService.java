@@ -14,8 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import in.tech_camp.furima.dto.ProductDetailDto;
 import in.tech_camp.furima.dto.ProductListDto;
+import in.tech_camp.furima.dto.repository.ProductDetailQueryResult;
 import in.tech_camp.furima.entity.ProductEntity;
+import in.tech_camp.furima.enums.Category;
+import in.tech_camp.furima.enums.Condition;
 import in.tech_camp.furima.enums.DeliveryFeeType;
+import in.tech_camp.furima.enums.PrefectureType;
+import in.tech_camp.furima.enums.UntilDelivery;
 import in.tech_camp.furima.form.ProductForm;
 import in.tech_camp.furima.repository.ProductRepository;
 
@@ -30,6 +35,7 @@ public class ProductService {
 
   // 商品一覧表示機能
   public List<ProductListDto> allProduct() {
+
     List<ProductListDto> products = productRepository.findAll()
         .stream().map(product -> {
           ProductListDto dto = new ProductListDto();
@@ -80,20 +86,39 @@ public class ProductService {
     productRepository.insert(product);
   }
 
+  // 商品詳細
   public ProductDetailDto selectByProductId(Long id) {
 
-    ProductDetailDto dto = productRepository.selectByProductId(id);
+    ProductDetailQueryResult result = productRepository.selectByProductId(id);
+    if (result == null)
+      return null;
 
-    dto.setDeliveryFee(DeliveryFeeType.fromCode(dto.getDeliveryFee().getCode()));
+    ProductDetailDto dto = new ProductDetailDto();
+    dto.setId(result.getId());
+    dto.setImg(result.getImg());
+    dto.setName(result.getName());
+    dto.setDescription(result.getDescription());
+    dto.setNickname(result.getNickname());
+    dto.setPrice(result.getPrice());
+    dto.setSoldout(result.isSoldout());
+    dto.setDeliveryFee(DeliveryFeeType.fromCode(result.getDeliveryFee()).getLabel());
+    dto.setCategory(Category.fromCode(result.getCategory()).getDisplayName());
+    dto.setCondition(Condition.fromCode(result.getCondition()).getDisplayName());
+    dto.setPrefecture(PrefectureType.fromCode(result.getPrefecture()).getLabel());
+    dto.setUntilDelivery(UntilDelivery.fromCode(result.getUntilDelivery()).getDisplayName());
+    dto.setUserId(result.getUserId());
 
     return dto;
 
   }
 
   // 商品削除
+  @Transactional
   public int deleteByProductId(Long id) {
 
     int result = productRepository.deleteByProductId(id);
+
+    System.out.println("削除結果 : " + result);
 
     if (result <= 0) {
       throw new RuntimeException("削除できませんでした");
@@ -106,9 +131,12 @@ public class ProductService {
   }
 
   // 商品更新
+  @Transactional
   public int updateByProductId(Long id) {
 
     int result = productRepository.updateByProductId(id);
+
+    System.out.println("更新結果 : " + result);
 
     if (result <= 0) {
       throw new RuntimeException("削除できませんでした");
