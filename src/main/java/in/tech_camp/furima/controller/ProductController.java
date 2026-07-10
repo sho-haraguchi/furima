@@ -41,12 +41,8 @@ public class ProductController {
 
   // 商品詳細
   @GetMapping("/items/{id}")
-  public String showProductDetail(@PathVariable Long id, Model model,@AuthenticationPrincipal CustomUserDetails userDetails) {
+  public String showProductDetail(@PathVariable Long id, Model model) {
 
-    if (userDetails != null) {
-      model.addAttribute("loginUser",userDetails.getId());
-    }
-    
     ProductDetailDto dto = productService.selectByProductId(id);
 
     model.addAttribute("item", dto);
