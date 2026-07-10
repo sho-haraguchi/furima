@@ -24,4 +24,13 @@ public enum Condition {
         }
         throw new IllegalArgumentException("不正な商品状態コードです: " + code);
     }
+
+    public static Condition fromDisplayName(String displayName) {
+        for (Condition until : Condition.values()) {
+            if (until.getDisplayName().equals(displayName)) {
+                return until;
+            }
+        }
+        throw new IllegalArgumentException("不正な発送日数表示です: " + displayName);
+    }
 }

@@ -21,4 +21,13 @@ public enum DeliveryFeeType {
         .orElseThrow(() -> new IllegalArgumentException("存在しない配送料負担コードです" + code));
   }
 
+  public static DeliveryFeeType fromDisplayName(String displayName) {
+    for (DeliveryFeeType until : DeliveryFeeType.values()) {
+      if (until.getLabel().equals(displayName)) {
+        return until;
+      }
+    }
+    throw new IllegalArgumentException("不正な発送日数表示です: " + displayName);
+  }
+
 }
