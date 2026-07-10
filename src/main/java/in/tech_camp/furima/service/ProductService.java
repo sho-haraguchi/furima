@@ -135,7 +135,7 @@ public class ProductService {
 
   // 商品更新ページ
   @Transactional(readOnly = true)
-  public ProductForm showEditProduct(ProductDetailDto dto,Long userId) {
+  public ProductForm showEditProduct(ProductDetailDto dto, Long userId) {
 
     if (!productRepository.existsByIdANDUserId(dto.getId(), userId)) {
       throw new RuntimeException("所有者ではありませんので編集できません");
@@ -156,11 +156,11 @@ public class ProductService {
 
   // 商品更新
   @Transactional
-  public int updateByProductId(Long id, ProductForm productForm, Long userId, String image ) throws IOException {
+  public int updateByProductId(Long id, ProductForm productForm, Long userId, String image) throws IOException {
 
     // dtoから受け取る -> dbのほうはint型なのでserviceでdtoをint型に変換 もしくは thymeleaf側で変換
 
-        if (!productRepository.existsByIdANDUserId(id, userId)) {
+    if (!productRepository.existsByIdANDUserId(id, userId)) {
       throw new RuntimeException("所有者ではありませんので編集できません");
     }
 
