@@ -22,7 +22,7 @@ echo $PAYJP_PUBLIC_KEY
 echo $PAYJP_SECRET_KEY
 ```
 
-④ 購入画面で以下を入力
+④ 購入画面で以下を入力（参考：https://docs.pay.jp/v1/testcard）
 カード番号：4242424242424242
 有効期限：登録時より未来の年月（12/99など）
 セキュリティコード：123
