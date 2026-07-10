@@ -28,6 +28,7 @@ public interface ProductRepository {
   // 商品詳細
   @Select("""
       SELECT
+        p.id,
         p.name,p.img,p.price,p.delivery_fee,p.description,p.user_id,
         u.nickname,p.category,p.condition,p.prefecture,p.until_delivery,b.product_id,
         CASE WHEN b.product_id IS NOT NULL THEN 1 ELSE 0 END AS soldout
