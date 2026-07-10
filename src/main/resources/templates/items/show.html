@@ -29,7 +29,7 @@
 
       </div>
       <div class="item-price-box">
-        <span class="item-price" th:text="${item.price} + 円">
+        <span class="item-price"th:text="'¥ ' + ${#numbers.formatInteger(item.price, 3, 'COMMA')}">
           ¥ 999,999,999
         </span>
         <span class="item-postage" th:text="${item.deliveryFee}">
