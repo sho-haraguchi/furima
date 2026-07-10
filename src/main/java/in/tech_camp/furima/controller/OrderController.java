@@ -72,9 +72,26 @@ public class OrderController {
                     BindingResult bindingResult,
                     Model model) {
 
+    // 未ログインのチェック
+    if (userDetail == null) {
+      return "redirect:/users/sign_in";
+    }
+
+    Long currentUserId = userDetail.getUser().getId();
+    ProductEntity product = orderService.findById(productId);
+
+    // 出品者自身ではないかのチェック
+    if (product.getUserId().equals(currentUserId)) {
+      return "redirect:/";
+    }
+
+    // すでに売り切れていないかのチェック
+    if (orderService.isSoldout(productId)) {
+      return "redirect:/";
+    }
+
     // エラーハンドリングができること（入力に問題がある状態で「購入」ボタンが押された場合、情報は受け入れられず、購入ページでエラーメッセージが表示されること）。
     if (bindingResult.hasErrors()) {
-      ProductEntity product = orderService.findById(productId);
       model.addAttribute("product", product);
       model.addAttribute("prefectures", PrefectureType.values());
       model.addAttribute("payjpPublicKey", payjpPublicKey); // 再表示時も鍵が必要なので
@@ -83,7 +100,6 @@ public class OrderController {
     }
 
     // OrderServiceの購入・決済処理
-    Long currentUserId = userDetail.getUser().getId();
     orderService.createOrder(productId, currentUserId, orderDto);
 
     // 購入が完了したら、トップページに遷移すること。
