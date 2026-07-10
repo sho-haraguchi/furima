@@ -1,4 +1,4 @@
-package in.tech_camp.furima.form;
+package in.tech_camp.furima.dto.repository;
 
 import lombok.Data;
 
