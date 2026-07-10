@@ -19,7 +19,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         // ログアウト状態でも実行できるGETリクエスト（トップページ、新規登録、ログイン、静的ファイル）
                         .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/users/sign_up", "/users/sign_in",
-                                "/error")
+                                "/error","/items/{id}")
                         .permitAll()
                         // ログアウト状態でも実行できるPOSTリクエスト（新規登録の送信処理）
                         .requestMatchers(HttpMethod.POST, "/users/sign_up").permitAll()
