@@ -101,10 +101,6 @@ public class ProductController {
       return "redirect:/";
     }
 
-    if (!dto.getUserId().equals(loginUser.getId())) {
-      return "redirect:/items/" + id;
-    }
-
     if (bindingResult.hasErrors()) {
       addEnumAttributesToModel(model);
       model.addAttribute("item", dto);
@@ -112,9 +108,13 @@ public class ProductController {
     }
 
     try {
-      productService.updateByProductId(id, productForm, loginUser.getId(), dto.getImg());
+      productService.updateByProductId(id, productForm, loginUser.getId(), dto.getImg(),dto.getUserId());
     } catch (IOException e) {
       bindingResult.rejectValue("img", "error.productForm", "画像の保存中にエラーが発生しました");
+      addEnumAttributesToModel(model);
+      model.addAttribute("item", dto);
+      return "items/edit";
+    } catch (RuntimeException e) {
       addEnumAttributesToModel(model);
       model.addAttribute("item", dto);
       return "items/edit";
