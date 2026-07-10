@@ -48,7 +48,7 @@ public class SecurityConfig {
             )
             .logout(logout -> logout
                 // ログアウト処理のパス
-                .logoutUrl("/logout")
+                .logoutUrl("/users/sign_out")
                 // ログアウト成功時のリダイレクト先（トップページへ）
                 .logoutSuccessUrl("/")
                 .permitAll()

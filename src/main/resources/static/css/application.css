@@ -100,7 +100,7 @@ select {
 input,
 textarea,
 select {
-  
+  font-size:100%;
 }
 legend {
   color:#000;
