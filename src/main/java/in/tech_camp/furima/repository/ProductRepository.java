@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import in.tech_camp.furima.dto.ProductDetailDto;
+import in.tech_camp.furima.dto.repository.ProductDetailQueryResult;
 import in.tech_camp.furima.dto.repository.ProductQueryResult;
 import in.tech_camp.furima.entity.ProductEntity;
 
@@ -28,15 +28,15 @@ public interface ProductRepository {
   // 商品詳細
   @Select("""
       SELECT
-        p.name,p.img,p.price,p.delivery_fee,p.description,
-        u.nickname,p.category,p.status,p.prefectures,p.until_delivery,b.product_id
+        p.name,p.img,p.price,p.delivery_fee,p.description,p.user_id,
+        u.nickname,p.category,p.condition,p.prefecture,p.until_delivery,b.product_id,
         CASE WHEN b.product_id IS NOT NULL THEN 1 ELSE 0 END AS soldout
       FROM products p
       LEFT JOIN users u ON p.user_id = u.id
       LEFT JOIN buys b ON p.id = b.product_id
       WHERE p.id = #{id}
       """)
-  ProductDetailDto selectByProductId(Long id);
+  ProductDetailQueryResult selectByProductId(Long id);
 
   // 削除
   @Delete("DELETE FROM products WHERE id = #{id}")
@@ -46,8 +46,8 @@ public interface ProductRepository {
   @Update("""
       UPDATE products
       SET img = #{img},name = #{name},description = #{description},
-      category = #{category},status = #{status},delivery_fee = #{deliveryFee},
-      prefectures = ${prefectures},until_delivery = #{untilDelivery},price = #{price}
+      category = #{category},conditon = #{conditon},delivery_fee = #{deliveryFee},
+      prefecture = ${prefecture},until_delivery = #{untilDelivery},price = #{price}
       WHERE id = #{id}
       """)
   int updateByProductId(Long id);
