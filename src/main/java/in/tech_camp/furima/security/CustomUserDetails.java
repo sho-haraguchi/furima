@@ -18,14 +18,13 @@ public class CustomUserDetails implements UserDetails {
         this.user = user;
     }
 
-    // Thymeleaf側でログイン中のユーザー情報（ニックネームなど）を取り出すために使用します
+
     public UserEntity getUser() {
         return user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // 今回は「PENDING」や「USER」といった権限を分ける要件がないため、空のリストを返します
         return Collections.emptyList();
     }
 
