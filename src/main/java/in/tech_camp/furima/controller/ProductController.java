@@ -115,6 +115,7 @@ public class ProductController {
       model.addAttribute("item", dto);
       return "items/edit";
     } catch (RuntimeException e) {
+      bindingResult.reject("error.productForm", e.getMessage());
       addEnumAttributesToModel(model);
       model.addAttribute("item", dto);
       return "items/edit";
