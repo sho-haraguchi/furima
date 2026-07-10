@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import in.tech_camp.furima.dto.ProductDetailDto;
 import in.tech_camp.furima.enums.Category;
 import in.tech_camp.furima.enums.Condition;
 import in.tech_camp.furima.enums.DeliveryFee;
@@ -40,11 +41,18 @@ public class ProductController {
 
   // 商品詳細
   @GetMapping("/items/{id}")
-  public String showProductDetail(@PathVariable Long id, Model model) {
+  public String showProductDetail(@PathVariable Long id, Model model,@AuthenticationPrincipal CustomUserDetails userDetails) {
 
-    model.addAttribute("item", productService.selectByProductId(id));
+    if (userDetails != null) {
+      model.addAttribute("loginUser",userDetails.getId());
+    }
+    
+    ProductDetailDto dto = productService.selectByProductId(id);
+
+    model.addAttribute("item", dto);
 
     return "items/show";
+
   }
 
   // 商品削除
