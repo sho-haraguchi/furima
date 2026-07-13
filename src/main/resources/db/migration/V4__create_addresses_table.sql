@@ -7,5 +7,5 @@ CREATE TABLE IF NOT EXISTS addresses (
   block VARCHAR(255) NOT NULL,
   building VARCHAR(255),
   phone VARCHAR(15) NOT NULL,
-  FOREIGN KEY (buy_id) REFERENCES buys(id)
+  FOREIGN KEY (buy_id) REFERENCES buys(id) ON DELETE CASCADE
 );
