@@ -196,14 +196,14 @@
   text-decoration: none;
   color: #3CCACE;
   margin: auto;
-  text-align: center;
 }
 
 .another-item {
   display: block;
-  margin: 30px 0px 8px;
+  margin: 30px auto 8px auto;
   color: #3CCACE;
   text-decoration: none;
   font-weight: bold;
   font-size: 23px;
+  text-align: center;
 }
