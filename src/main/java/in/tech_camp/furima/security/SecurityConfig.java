@@ -20,7 +20,7 @@ public class SecurityConfig {
                 // ログアウト状態でも実行できるGETリクエスト（トップページ、商品詳細、新規登録、ログイン、静的ファイル）
                 .requestMatchers(
                     "/",
-                    "/items/{id}",
+                    "/items/{id:\\d+}",
                     "/css/**",
                     "/images/**",
                     "/js/**",
