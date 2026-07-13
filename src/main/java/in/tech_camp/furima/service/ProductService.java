@@ -21,7 +21,7 @@ import in.tech_camp.furima.enums.Condition;
 import in.tech_camp.furima.enums.DeliveryFeeType;
 import in.tech_camp.furima.enums.PrefectureType;
 import in.tech_camp.furima.enums.UntilDelivery;
-import in.tech_camp.furima.form.ProductEditForm;
+import in.tech_camp.furima.dto.repository.ProductEditForm;
 import in.tech_camp.furima.form.ProductForm;
 import in.tech_camp.furima.repository.ProductRepository;
 

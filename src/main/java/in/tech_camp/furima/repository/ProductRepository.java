@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Update;
 import in.tech_camp.furima.dto.repository.ProductDetailQueryResult;
 import in.tech_camp.furima.dto.repository.ProductQueryResult;
 import in.tech_camp.furima.entity.ProductEntity;
-import in.tech_camp.furima.form.ProductEditForm;
+import in.tech_camp.furima.dto.repository.ProductEditForm;
 
 @Mapper
 public interface ProductRepository {
@@ -63,11 +63,6 @@ public interface ProductRepository {
       WHERE id = #{id}
       """)
   int updateByProductId(ProductEditForm productEditForm);
-
-  // 商品出品機能
-  @Insert("INSERT INTO products (user_id, name, description, category, condition, delivery_fee, prefecture, until_delivery, price, img) VALUES (#{userId}, #{name}, #{description}, #{category}, #{condition}, #{deliveryFee}, #{prefecture}, #{untilDelivery}, #{price}, #{img})")
-  @Options(useGeneratedKeys = true, keyProperty = "id")
-  void insert(ProductEntity product);
 
   // 1件取得
   @Select("SELECT * FROM products WHERE id = #{id}")
