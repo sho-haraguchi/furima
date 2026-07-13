@@ -27,24 +27,11 @@ public class UserService {
     public Map<String, String> validateRegistration(RegisterForm form) {
         Map<String, String> errors = new HashMap<>();
 
-        // パスワードの一致チェック
-        if (!form.getPassword().equals(form.getPasswordConfirmation())) {
-            errors.put("passwordConfirmation", "パスワードとパスワード（確認）が一致しません");
-        }
-
         // メールアドレスの重複チェック
         if (isEmailExist(form.getEmail())) {
             errors.put("email", "このメールアドレスは既に登録されています");
         }
 
-        // 存在しない日付対策
-        if (form.getBirthYear() != null && form.getBirthMonth() != null && form.getBirthDay() != null) {
-            try {
-                LocalDate.of(form.getBirthYear(), form.getBirthMonth(), form.getBirthDay());
-            } catch (DateTimeException e) {
-                errors.put("birthDay", "存在する正しい日付を選択してください");
-            }
-        }
 
         return errors;
     }

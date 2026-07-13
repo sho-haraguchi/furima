@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import in.tech_camp.furima.form.RegisterForm;
 import in.tech_camp.furima.service.UserService;
+import in.tech_camp.furima.validation.GroupOrder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/users/sign_up")
-    public String userInsert(@Validated @ModelAttribute("registerForm") RegisterForm registerForm,
+    public String userInsert(@Validated(GroupOrder.class) @ModelAttribute("registerForm") RegisterForm registerForm,
             BindingResult result, HttpServletRequest request) {
 
         // 1. 基本的なアノテーションバリデーション（@NotBlankなど）のエラー判定
