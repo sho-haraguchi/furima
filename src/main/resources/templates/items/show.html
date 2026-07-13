@@ -8,6 +8,7 @@
   <link rel="stylesheet" th:href="@{/css/shared/header.css}">
   <link rel="stylesheet" th:href="@{/css/shared/footer.css}">
   <link rel="stylesheet" th:href="@{/css/items/show.css}">
+  <link rel="stylesheet" th:href="@{/css/items/index.css}">
 </head>
 
 <body>
@@ -50,7 +51,8 @@
 
       <!-- 商品が売れていない場合はこちらを表示しましょう -->
       <th:block sec:authorize="isAuthenticated()" th:if="${!item.soldout}">
-        <a th:href="@{/items/{id}/orders(id=${item.id})}" class="item-red-btn" th:if="${#authentication.principal.id != item.userId}">購入画面に進む</a>
+        <a th:href="@{/items/{id}/orders(id=${item.id})}" class="item-red-btn"
+          th:if="${#authentication.principal.id != item.userId}">購入画面に進む</a>
       </th:block>
 
       <div class="item-explain-box">
