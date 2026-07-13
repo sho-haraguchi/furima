@@ -10,5 +10,5 @@ CREATE TABLE IF NOT EXISTS products (
   until_delivery INTEGER NOT NULL,
   price BIGINT NOT NULL,
   img VARCHAR(255) NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
