@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Data
 @PasswordEquals(groups = GroupOrder.Group3.class)
-@ValidDate(groups = GroupOrder.Group3.class)
+@ValidDate(groups = GroupOrder.Group1.class)
 public class RegisterForm {
 
     @NotBlank(message = "ニックネームを入力してください")
@@ -27,7 +27,7 @@ public class RegisterForm {
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$", message = "パスワードは半角英数字混合で入力してください", groups = GroupOrder.Group2.class)
     private String password;
 
-    @NotBlank(message = "パスワード（確認）を入力してください")
+    @NotBlank(message = "パスワード（確認）を入力してください", groups = GroupOrder.Group1.class)
     private String passwordConfirmation;
 
     @NotBlank(message = "名字を入力してください", groups = GroupOrder.Group1.class)
@@ -46,12 +46,12 @@ public class RegisterForm {
     @Pattern(regexp = "^[ァ-ヶー]+$", message = "名前（カナ）は全角カタカナで入力してください", groups = GroupOrder.Group2.class)
     private String firstNameKana;
 
-    @NotNull(message = "誕生年を選択してください", groups = GroupOrder.Group3.class)
+    @NotNull(message = "誕生年を選択してください", groups = GroupOrder.Group1.class)
     private Integer birthYear;
 
-    @NotNull(message = "誕生月を選択してください", groups = GroupOrder.Group3.class)
+    @NotNull(message = "誕生月を選択してください", groups = GroupOrder.Group1.class)
     private Integer birthMonth;
 
-    @NotNull(message = "誕生日を選択してください", groups = GroupOrder.Group3.class)
+    @NotNull(message = "誕生日を選択してください", groups = GroupOrder.Group1.class)
     private Integer birthDay;
 }
