@@ -188,12 +188,15 @@
   display: flex;
   justify-content: space-between;
   width: 50vw;
+  margin: auto;
 }
 
 .change-item-btn {
   font-size: 30px;
   text-decoration: none;
   color: #3CCACE;
+  margin: auto;
+  text-align: center;
 }
 
 .another-item {
