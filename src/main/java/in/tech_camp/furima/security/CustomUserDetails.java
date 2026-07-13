@@ -22,12 +22,16 @@ public class CustomUserDetails implements UserDetails {
     public UserEntity getUser() {
         return user;
     }
-
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();
     }
-
+    
+    public Long getId(){
+        return user.getId();
+    }
+    
     @Override
     public String getPassword() {
         return user.getPassword();

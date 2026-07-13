@@ -29,4 +29,13 @@ public enum Category {
         }
         throw new IllegalArgumentException("不正なカテゴリーコードです: " + code);
     }
+
+    public static Category fromDisplayName(String displayName) {
+        for (Category category : Category.values()) {
+            if (category.getDisplayName().equals(displayName)) {
+                return category;
+            }
+        }
+        throw new IllegalArgumentException("不正なカテゴリー表示です: " + displayName);
+    }
 }

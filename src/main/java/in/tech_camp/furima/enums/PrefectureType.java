@@ -70,4 +70,13 @@ public enum PrefectureType {
         .orElseThrow(() -> new IllegalArgumentException("存在しない都道府県コードです" + code));
   }
 
+  public static PrefectureType fromDisplayName(String displayName) {
+    for (PrefectureType prefectureType : PrefectureType.values()) {
+      if (prefectureType.getLabel().equals(displayName)) {
+        return prefectureType;
+      }
+    }
+    throw new IllegalArgumentException("不正な都道府県表示です: " + displayName);
+  }
+
 }

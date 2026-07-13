@@ -115,7 +115,7 @@
           </a>
         </li>
         <li class="list" th:each="item : ${items}">
-          <a href="#">
+          <a th:href="@{/items/{id}(id=${item.id})}">
             <div class="item-img-content">
               <div class="messages">
                 <img th:src="@{|/uploads/${item.img}|}" class="item-img" alt="NO IMAGE"

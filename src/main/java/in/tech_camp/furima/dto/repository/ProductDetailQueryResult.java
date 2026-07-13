@@ -1,21 +1,21 @@
-package in.tech_camp.furima.dto;
+package in.tech_camp.furima.dto.repository;
 
 import lombok.Data;
 
 @Data // 商品詳細
-public class ProductDetailDto {
+public class ProductDetailQueryResult {
 
   private Long id;
   private String name;
   private String img;
   private Long price;
-  private String deliveryFee;
+  private int deliveryFee;
   private String description;
   private String nickname;
-  private String category;
-  private String condition;
-  private String prefecture;
-  private String untilDelivery;
+  private int category;
+  private int condition;
+  private int prefecture;
+  private int untilDelivery;
   private boolean soldout;
   private Long userId;
 
